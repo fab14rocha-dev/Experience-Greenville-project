@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Bible — Experience Greenville</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      padding: 60px 24px;
+      max-width: 860px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 56px;
+      border-bottom: 1px solid #1e1e1e;
+      padding-bottom: 0;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: #555;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tab-btn:hover { color: #aaa; }
+
+    .tab-btn.active {
+      color: #C9A96E;
+      border-bottom-color: #C9A96E;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Competitor cards */
+    .competitor-card {
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 10px;
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+    }
+
+    .competitor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 16px;
+    }
+
+    .competitor-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .competitor-url {
+      font-size: 12px;
+      color: #555;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .competitor-url:hover { color: #C9A96E; }
+
+    .competitor-desc {
+      font-size: 14px;
+      color: #999;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .competitor-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .fact {
+      background: #0e0e0e;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .fact-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #444;
+      margin-bottom: 4px;
+    }
+
+    .fact-value {
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    .competitor-lesson {
+      border-left: 3px solid #C9A96E;
+      padding: 14px 18px;
+      background: #0e0e0e;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #888;
+      line-height: 1.65;
+    }
+
+    .competitor-lesson strong { color: #C9A96E; }
+
+    header {
+      border-bottom: 1px solid #1e1e1e;
+      padding-bottom: 32px;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    header p { font-size: 14px; color: #555; }
+
+    .meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      font-size: 12px;
+      color: #555;
+      letter-spacing: 0.06em;
+    }
+
+    .meta-item strong { color: #888; }
+
+    /* Section */
+    .section { margin-bottom: 64px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #C9A96E;
+      margin-bottom: 14px;
+    }
+
+    .section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #161616;
+      margin: 56px 0;
+    }
+
+    /* Cards */
+    .card {
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #bbb;
+      line-height: 1.7;
+    }
+
+    .card strong { color: #e0e0e0; }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    /* Two-column grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* List */
+    .info-list {
+      list-style: none;
+    }
+
+    .info-list li {
+      font-size: 14px;
+      color: #bbb;
+      padding: 10px 0;
+      border-bottom: 1px solid #161616;
+      display: flex;
+      gap: 12px;
+    }
+
+    .info-list li:last-child { border-bottom: none; }
+
+    .info-list li::before {
+      content: '◆';
+      font-size: 7px;
+      color: #C9A96E;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* Tier row */
+    .tier-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 10px;
+    }
+
+    .tier-symbol {
+      font-size: 22px;
+      color: #C9A96E;
+      min-width: 44px;
+      font-weight: 700;
+    }
+
+    .tier-body { flex: 1; }
+
+    .tier-body strong {
+      display: block;
+      color: #e0e0e0;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .tier-body span {
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* Status badges */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .badge.done    { background: #1e3a2f; color: #4caf87; }
+    .badge.open    { background: #2d2416; color: #c4892a; }
+    .badge.pending { background: #1e1e1e; color: #666; }
+
+    /* Problem block */
+    .problem-block {
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-left: 3px solid #C9A96E;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+    }
+
+    .problem-block .p-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 6px;
+    }
+
+    .problem-block .p-body {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Open questions */
+    .q-block {
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-left: 3px solid #555;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    .build-block {
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 12px;
+    }
+
+    .build-block .b-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 8px;
+    }
+
+    .build-block .b-body {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Project Bible — Experience Greenville</h1>
+    <p>A shared overview of the project — what we're building, how it works, and where we're headed.</p>
+    <div class="meta">
+      <div class="meta-item"><strong>Project started:</strong> 14 April 2026</div>
+      <div class="meta-item"><strong>Status:</strong> In development</div>
+    </div>
+  </header>
+
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('project')">Project</button>
+    <button class="tab-btn" onclick="switchTab('market')">Market Research</button>
+    <button class="tab-btn" onclick="switchTab('experiences')">Experience Details</button>
+  </div>
+
+  <!-- TAB: PROJECT -->
+  <div class="tab-panel active" id="tab-project">
+
+  <!-- 1. BACKGROUND -->
+  <div class="section">
+    <div class="section-label">Background</div>
+    <h2>About Joseph LoBello</h2>
+    <ul class="info-list">
+      <li>Background in hospitality and tourism — won the Rising Tide Award in 2012 (Jersey Shore CVB) for his limousine company "Driven by Excellence"</li>
+      <li>Based in Greenville, SC — building a local experiential business</li>
+      <li>Founder and creator of Experience Greenville / XPerience</li>
+    </ul>
+  </div>
+
+  <hr class="divider" />
+
+
+  <!-- 2. JOSEPH'S IDEA -->
+  <div class="section">
+    <div class="section-label">Joseph's idea</div>
+    <h2>What Joseph is building</h2>
+
+    <div class="card">
+      <p>Joseph offers 60-minute immersive, curated experiences designed around each guest's personal world — their favorite sport, song, food, or most meaningful memories. The person being surprised has no idea what's coming. Every detail of the experience is built around who they are.</p>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <div class="card-title">Experience types — with real examples</div>
+      <p style="margin-bottom:12px;"><strong>Dining</strong> — The guest arrives at a restaurant to find their name at the top of the menu, with their favorite foods created as off-menu specials. The team is lined up waiting for them by name. A handwritten card arrives sharing how they first met, with a photo from that moment.</p>
+      <p style="margin-bottom:12px;"><strong>Sports</strong> — For a NY Knicks fan: a basketball waiting on the court, red carpet entrance to center court, announced as the star by name, scoreboard showing 101–100 with 7 seconds left. They take the game-winning shot. Then a 5-shot challenge against a friend, family member, or partner, with different point values placed on the court by difficulty.</p>
+      <p><strong>Music</strong> — A private surprise concert featuring the guest's favorite songs, performed live by a singer.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card">
+        <div class="card-title">Target audience</div>
+        Ages 21–45 · Anniversaries · Birthdays · Special occasions
+      </div>
+      <div class="card">
+        <div class="card-title">Location</div>
+        Greenville, SC · Partners with local hotels, venues, restaurants
+      </div>
+      <div class="card">
+        <div class="card-title">Reference sites</div>
+        <a href="https://josephlobello.primespotsolutions.multisiteadmin.com/programs" target="_blank" style="color:#C9A96E; font-size:13px;">josephlobello.primespotsolutions.com</a><br>
+        <a href="http://www.ExperienceGreenville.com" target="_blank" style="color:#C9A96E; font-size:13px;">ExperienceGreenville.com</a>
+      </div>
+      <div class="card">
+        <div class="card-title">AI element</div>
+        Custom personalized song for each guest — referenced Songer as an example tool, open to alternatives
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <div class="card-title">What Joseph is looking for help with</div>
+      <p style="margin-bottom:10px;"><strong>1. Discreet data collection</strong> — How to gather a guest's preferences (favorite song, food, team, memories) in a way that feels natural and conversational, without revealing that it's being used to plan a surprise.</p>
+      <p style="margin-bottom:10px;"><strong>2. Selling without spoiling</strong> — How to show a potential customer what they're buying without giving away what the experience actually looks like. The whole value is the surprise.</p>
+      <p><strong>3. Digital presence</strong> — A starting point on the web that represents the concept and allows people to book or request an experience.</p>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+
+  <!-- 3. MY UNDERSTANDING — visually distinct -->
+  <div style="background:#0d0d0d; border: 1px solid #222; border-left: 3px solid #C9A96E; border-radius: 12px; padding: 32px; margin-bottom: 64px;">
+    <div style="font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#C9A96E; margin-bottom:8px;">The build</div>
+    <p style="font-size:13px; color:#555; margin-bottom:32px;">What I'm building based on our conversations so far — pricing structure, the product I'm working on, and what comes next.</p>
+
+    <!-- Pricing -->
+    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px;">Pricing tiers (per couple)</h2>
+
+    <div class="tier-row" style="margin-bottom:10px;">
+      <div class="tier-symbol">$</div>
+      <div class="tier-body">
+        <strong>Tier 1 — $500</strong>
+        <span>One experience category · Full personalization · Custom song</span>
+      </div>
+    </div>
+    <div class="tier-row" style="margin-bottom:10px;">
+      <div class="tier-symbol">$$</div>
+      <div class="tier-body">
+        <strong>Tier 2 — $1,200</strong>
+        <span>Two experience categories · Full personalization · Custom song · Extended moments</span>
+      </div>
+    </div>
+    <div class="tier-row" style="margin-bottom:32px;">
+      <div class="tier-symbol">$$$</div>
+      <div class="tier-body">
+        <strong>Tier 3 — $2,500</strong>
+        <span>All three experiences · ~3 hours · Full personalization · Custom song · Premium extras</span>
+      </div>
+    </div>
+
+    <!-- Current build -->
+    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px;">What I'm currently building</h2>
+
+    <div class="build-block">
+      <div class="b-title">Landing page — anniversary and birthday focus</div>
+      <div class="b-body">A single page targeting couples aged 21–45. Designed to sell the concept emotionally without revealing the surprise. Sections: hero, what is this, how it works, experience levels ($ / $$ / $$$, no prices shown), and a final CTA. Premium visual feel with smooth animations.</div>
+    </div>
+
+    <div class="build-block">
+      <div class="b-title">Conversational intake form (full screen overlay)</div>
+      <div class="b-body">
+        Opens as a full screen overlay triggered by any CTA button. One question at a time. Back navigation and keyboard support. Confirmation prompt on close to avoid losing answers.<br><br>
+        <strong>Two paths:</strong><br>
+        Path A — Planning a surprise for someone else: specific questions about the person being surprised.<br>
+        Path B — Both want to be surprised: softer, open-ended questions that don't give anything away for either person.
+      </div>
+    </div>
+
+    <div class="build-block" style="margin-bottom:32px;">
+      <div class="b-title">Backend</div>
+      <div class="b-body">Form submissions saved to Firebase. Joseph reviews each one manually and follows up with the client. No payment flow for now — manual approval first. An admin view for Joseph to manage submissions is planned as a next step.</div>
+    </div>
+
+    <!-- Open questions -->
+    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px;">Next steps</h2>
+    <div class="q-block"><span class="badge open">Needed</span>&nbsp; Full breakdown of what's included in each tier</div>
+    <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Admin view to manage and review form submissions</div>
+    <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Payment flow — manual approval first, direct booking later</div>
+    <div class="q-block"><span class="badge pending">Planned</span>&nbsp; AI song personalization integration</div>
+    <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Hosting setup</div>
+  </div>
+
+
+  <!-- 4. TECHNICAL -->
+  <div class="section">
+    <div class="section-label">Technical</div>
+    <h2>Stack and file structure</h2>
+
+    <div class="grid-2">
+      <div class="card"><div class="card-title">Frontend</div>Vanilla JS · GSAP + ScrollTrigger · Google Fonts (Cormorant Garamond + Inter)</div>
+      <div class="card"><div class="card-title">Backend</div>Firebase Firestore (compat SDK) · No build step required</div>
+      <div class="card"><div class="card-title">Animations</div>GSAP for hero entrance · ScrollTrigger for scroll reveals · Form step transitions</div>
+      <div class="card"><div class="card-title">Hosting</div>TBD — Firebase Hosting is the natural choice (free tier)</div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <div class="card-title">File structure</div>
+      1. HTML / index.html, admin.html &nbsp;·&nbsp;
+      3. Scripts / main.js, form.js, firebase.js &nbsp;·&nbsp;
+      4. Data / experiences.js &nbsp;·&nbsp;
+      5. Styles / style.css &nbsp;·&nbsp;
+      6. Docs / this file, call notes &nbsp;·&nbsp;
+      7. Reference files / Joseph's PDFs and docs
+    </div>
+  </div>
+
+  </div> <!-- end tab-project -->
+
+
+  <!-- TAB: SIMILAR BUSINESSES -->
+  <div class="tab-panel" id="tab-market">
+
+    <div class="section">
+      <div class="section-label">Market research</div>
+      <h2>Similar businesses in the US</h2>
+      <p style="font-size:14px; color:#555; margin-bottom:32px;">Three companies operating in the same space. All US-based, all with proven traction. Useful for understanding the market, the positioning, and where Joseph's concept is different.</p>
+
+      <!-- Pack Up + Go -->
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Pack Up + Go</div>
+          <a class="competitor-url" href="https://www.packupgo.com" target="_blank">packupgo.com</a>
+        </div>
+        <p class="competitor-desc">A surprise travel company that plans domestic getaways entirely on your behalf. You fill in a profile about your preferences, they handle everything — destination, hotel, activities. You find out where you're going the morning of your trip. Founded in 2016 by a 23-year-old with no outside funding, grown into a multi-million dollar business.</p>
+        <div class="competitor-facts">
+          <div class="fact">
+            <div class="fact-label">Customers</div>
+            <div class="fact-value">43,000+ travelers since 2016</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Price range</div>
+            <div class="fact-value">From $500/person (road trip) · $900+ (flights)</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Funding</div>
+            <div class="fact-value">Zero — bootstrapped to multi-million dollar revenue</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Model</div>
+            <div class="fact-value">Fill a profile → they plan everything → surprise reveal</div>
+          </div>
+        </div>
+        <div class="competitor-lesson">
+          <strong>Why it matters:</strong> Closest proof of concept to Joseph's model. Same mechanic — you give us information, we handle the surprise. 43,000 customers proves real demand. The key difference: Pack Up + Go sends you somewhere. Joseph builds a moment around exactly who you are. More personal, more premium.
+        </div>
+      </div>
+
+      <!-- Blind Experiences -->
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Blind Experiences</div>
+          <a class="competitor-url" href="https://www.blindexperiences.com" target="_blank">blindexperiences.com</a>
+        </div>
+        <p class="competitor-desc">A luxury travel agency that started with surprise honeymoons — couples handed over the planning entirely and surprises were revealed through sealed envelopes throughout the trip. Expanded into tailored family and multi-generational itineraries. Operates at the premium end of the market with a strong emphasis on the emotional reveal.</p>
+        <div class="competitor-facts">
+          <div class="fact">
+            <div class="fact-label">Niche</div>
+            <div class="fact-value">Honeymoons, anniversaries, luxury family travel</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Price range</div>
+            <div class="fact-value">Premium / luxury tier</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Signature detail</div>
+            <div class="fact-value">Sealed envelope reveals throughout the experience</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Model</div>
+            <div class="fact-value">Full-service planning · Surprise built into every step</div>
+          </div>
+        </div>
+        <div class="competitor-lesson">
+          <strong>Why it matters:</strong> Shows that the surprise mechanic works at the luxury end. Also shows that starting with a narrow audience (honeymoons) and expanding later is a valid strategy. Joseph could do the same — start with anniversaries, expand from there. The sealed envelope idea is also a nice detail worth borrowing conceptually.
+        </div>
+      </div>
+
+      <!-- Bespoke Experiences -->
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Bespoke Experiences</div>
+          <a class="competitor-url" href="https://bespokeprivatetours.com/nashville-private-tours" target="_blank">bespokeprivatetours.com</a>
+        </div>
+        <p class="competitor-desc">A US-based company offering handcrafted, fully personalized experiences in specific cities — Nashville, San Francisco, Chicago, New Orleans. Each experience is built around the client's interests and delivered with a high level of local knowledge and curation. Highly rated on TripAdvisor across multiple city locations.</p>
+        <div class="competitor-facts">
+          <div class="fact">
+            <div class="fact-label">Model</div>
+            <div class="fact-value">City-based · Locally curated · Fully personalized</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Reviews</div>
+            <div class="fact-value">Consistently high ratings on TripAdvisor</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Audience</div>
+            <div class="fact-value">Couples, visitors, special occasions</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">Positioning</div>
+            <div class="fact-value">Premium local experiences · Not a catalog product</div>
+          </div>
+        </div>
+        <div class="competitor-lesson">
+          <strong>Why it matters:</strong> This is the closest model to what Joseph is building — a city-based, bespoke experience service. It proves you don't need to be national to be successful. A local, deeply personal offering in one city is a real business. Greenville could be Joseph's version of Nashville.
+        </div>
+      </div>
+
+    </div>
+
+    <hr style="border:none; border-top:1px solid #161616; margin: 56px 0;" />
+
+    <!-- LOCAL COMPETITION -->
+    <div class="section">
+      <div class="section-label">Local landscape</div>
+      <h2>Competition in Greenville and nearby cities</h2>
+      <p style="font-size:14px; color:#555; margin-bottom:28px;">Research across Greenville, Spartanburg, Columbia (SC) and Charlotte (NC) — the nearest relevant markets.</p>
+
+      <div class="card" style="border-left: 3px solid #4caf87; margin-bottom:20px;">
+        <div class="card-title" style="color:#4caf87;">Key finding</div>
+        No business in Greenville or any nearby city is offering what Joseph offers. The market is wide open locally. This is a genuine first-mover advantage in his city.
+      </div>
+
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Greenville, SC</div>
+          <span style="font-size:12px; color:#4caf87;">No direct competition</span>
+        </div>
+        <p class="competitor-desc">What exists in Greenville is entirely generic — escape rooms (Escape Artist Greenville), spa packages (River Falls Spa), culinary tours, cooking classes, paint-and-sip nights, and standard restaurant reservations. Some venues like Hotel Hartness and Table 301 offer elevated experiences, but none are personalized around the guest. No one is doing bespoke, surprise-based experiences built around who the person actually is.</p>
+        <div class="competitor-lesson">
+          <strong>Opportunity:</strong> Joseph is the only person in Greenville doing this. The landing page can legitimately say there is nothing else like this in the city.
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Spartanburg, SC</div>
+          <span style="font-size:12px; color:#555;">~30 min from Greenville</span>
+        </div>
+        <p class="competitor-desc">Couples options in Spartanburg are limited to craft breweries, live music venues, antique shops and standard dining. No curated or personalized experience business found. A natural expansion market once the Greenville model is proven.</p>
+        <div class="competitor-lesson">
+          <strong>Note:</strong> Close enough to serve without a full expansion. Worth mentioning on the page as a service area once traction is established.
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Columbia, SC</div>
+          <span style="font-size:12px; color:#555;">~1.5 hrs from Greenville</span>
+        </div>
+        <p class="competitor-desc">Columbia has the usual mix — spa packages, dance classes, wine-and-paint studios, and upscale dining. Nothing personalized or surprise-based. The city has a large university population and is the state capital, which means a sizeable couples and anniversary market.</p>
+        <div class="competitor-lesson">
+          <strong>Note:</strong> Viable future market. Not an immediate priority.
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Charlotte, NC</div>
+          <span style="font-size:12px; color:#555;">~1.5 hrs from Greenville</span>
+        </div>
+        <p class="competitor-desc">Charlotte has Giftory and XperienceDays — both experience gift catalog platforms. These are marketplace products where you pick from a list of pre-existing activities. They are not personalized and not surprise-based. No bespoke, curated experience business was found operating locally in Charlotte either.</p>
+        <div class="competitor-lesson">
+          <strong>Note:</strong> Charlotte is a large, affluent market. If the Greenville model works, Charlotte is the most logical next city — and the competition there is weak.
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- end tab-market -->
+
+
+  <!-- TAB: EXPERIENCE DETAILS -->
+  <div class="tab-panel" id="tab-experiences">
+
+    <div class="section">
+      <div class="section-label">Experience details</div>
+      <h2>What Joseph actually delivers</h2>
+      <p style="font-size:14px; color:#555; margin-bottom:32px;">Everything Joseph has described so far, organized by experience type. Summarized from his messages — useful for writing copy, designing the form questions, and understanding what each tier might include.</p>
+
+      <!-- DINING -->
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Dining</div>
+          <span style="font-size:12px; color:#C9A96E;">Most developed concept</span>
+        </div>
+        <p class="competitor-desc">A fully staged restaurant experience that makes the couple feel the whole evening was designed around them — because it was.</p>
+        <ul class="info-list" style="margin-top:16px;">
+          <li>The restaurant's menu is redesigned with the couple's names at the top and their favorite dish listed first — printed to look like the restaurant made it just for them</li>
+          <li>The full restaurant team is lined up at the entrance and greets the couple by name on arrival</li>
+          <li>At select restaurants during off-peak times, a live singer performs their favorite song</li>
+          <li>One partner writes a card in advance — Joseph places it on the table before they arrive as a surprise</li>
+          <li>Pickup from the hotel or parking spot in a themed golf cart or luxury 3-wheel bicycle</li>
+          <li>Red carpet rolled out for the cart, bike, and restaurant entrance</li>
+        </ul>
+      </div>
+
+      <!-- MUSIC -->
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Music</div>
+          <span style="font-size:12px; color:#555;">AI + live options</span>
+        </div>
+        <p class="competitor-desc">Two ways to deliver a music moment — one tech-driven, one live. Can be used on-site or off.</p>
+        <ul class="info-list" style="margin-top:16px;">
+          <li>AI-generated personalized song (via Songer) — their names and story woven into the lyrics. Delivered as a surprise during the experience, and kept as a keepsake</li>
+          <li>Live singer performing their favorite song — Joseph has shown examples including a Bon Jovi tribute group and a solo singer surprising a couple mid-experience</li>
+        </ul>
+      </div>
+
+      <!-- SPORTS -->
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Sports</div>
+          <span style="font-size:12px; color:#555;">Widest range of activations</span>
+        </div>
+        <p class="competitor-desc">The most flexible category — Joseph has built out a full set of physical challenges and activations that work across different ages, skill levels, and occasions.</p>
+        <ul class="info-list" style="margin-top:16px;">
+          <li><strong style="color:#e0e0e0;">Basketball Last Second Shot</strong> — scoreboard shows 3 seconds left, they take the game-winning shot. High drama, big moment</li>
+          <li><strong style="color:#e0e0e0;">Catching Challenge</strong> — ball thrown at varying speeds and angles, designed to feel like a championship event regardless of skill level</li>
+          <li><strong style="color:#e0e0e0;">Shooting Challenges</strong> — three unique basketball court games built for all skill levels</li>
+          <li><strong style="color:#e0e0e0;">Electric Bike Tour</strong> — bikes delivered to the hotel, Falls Park, or Unity Park. Scenic route with surprise photos of the couple planted along the way. Personalized drink stop waiting for them by name</li>
+          <li><strong style="color:#e0e0e0;">Bocce Ball Challenge</strong> — a reimagined version of bocce with Joseph's own spin on the format</li>
+          <li><strong style="color:#e0e0e0;">Aerobe</strong> — used mostly with families and younger children</li>
+          <li><strong style="color:#e0e0e0;">Speed & Running Challenges</strong> — family races designed so that slower runners can still win</li>
+          <li><strong style="color:#e0e0e0;">Personalized Sports Card</strong> — custom-designed professional-style sports card used as both a keepsake and a backdrop (primarily for teen birthdays)</li>
+        </ul>
+      </div>
+
+      <!-- KIDS / BIRTHDAYS -->
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-name">Kids &amp; Family Extras</div>
+          <span style="font-size:12px; color:#555;">Birthday-focused add-ons</span>
+        </div>
+        <p class="competitor-desc">A few specific touches Joseph has designed for younger birthday guests that extend beyond the core three categories.</p>
+        <ul class="info-list" style="margin-top:16px;">
+          <li>The birthday child is brought their own pizza dough, sauce, and cheese — they make their own pizza at the table and walk it back into the kitchen themselves</li>
+          <li>Personalized sports card as a backdrop and keepsake for the occasion</li>
+        </ul>
+      </div>
+
+    </div>
+  </div> <!-- end tab-experiences -->
+
+
+  <!-- PASSWORD OVERLAY -->
+  <div id="passwordOverlay" style="
+    position: fixed; inset: 0; z-index: 999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px;
+  ">
+    <div style="font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#C9A96E; margin-bottom:4px;">Experience Greenville</div>
+    <div style="font-size:22px; font-weight:600; color:#fff; margin-bottom:8px;">Project Bible</div>
+    <input
+      id="passwordInput"
+      type="password"
+      placeholder="Enter password"
+      autocomplete="off"
+      style="
+        background: #111; border: 1px solid #2a2a2a; border-radius: 8px;
+        color: #e0e0e0; font-size: 15px; padding: 12px 18px;
+        width: 280px; outline: none; font-family: 'Segoe UI', sans-serif;
+        text-align: center; letter-spacing: 0.05em;
+      "
+    />
+    <div id="passwordError" style="font-size:12px; color:#c0392b; height:16px;"></div>
+    <button
+      onclick="checkPassword()"
+      style="
+        background: #C9A96E; border: none; border-radius: 8px;
+        color: #0a0a0a; font-size: 13px; font-weight: 700;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        padding: 12px 32px; cursor: pointer; font-family: 'Segoe UI', sans-serif;
+      "
+    >Enter</button>
+  </div>
+
+  <script>
+    // Password check
+    document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      if (input === 'josephjoseph') {
+        document.getElementById('passwordOverlay').style.display = 'none';
+      } else {
+        document.getElementById('passwordError').textContent = 'Incorrect password.';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+      }
+    }
+
+    // Tab switching
+    function switchTab(id) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
