@@ -350,7 +350,7 @@
     <p>A shared overview of the project — what we're building, how it works, and where we're headed.</p>
     <div class="meta">
       <div class="meta-item"><strong>Project started:</strong> 14 April 2026</div>
-      <div class="meta-item"><strong>Status:</strong> In development</div>
+      <div class="meta-item"><strong>Status:</strong> On hold — draft approved, awaiting client assets and direction</div>
     </div>
   </header>
 
@@ -457,35 +457,43 @@
     </div>
 
     <!-- Current build -->
-    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px;">What I'm currently building</h2>
+    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px;">What's been built</h2>
 
     <div class="build-block">
-      <div class="b-title">Landing page — anniversary and birthday focus</div>
-      <div class="b-body">A single page targeting couples aged 21–45. Designed to sell the concept emotionally without revealing the surprise. Sections: hero, what is this, how it works, experience levels ($ / $$ / $$$, no prices shown), and a final CTA. Premium visual feel with smooth animations.</div>
+      <div class="b-title"><span class="badge done" style="margin-right:8px;">Done</span> Interactive intake draft (Experience_draft1.html)</div>
+      <div class="b-body">A fully interactive theatrical experience built in vanilla HTML/CSS/JS. No backend yet — demo only. Flow: blue curtain opens → occasion selector with particle bursts → name and date input → spotlight sweep reveal with personalized marquee and live countdown → VIP ticket → one-question-at-a-time favourites form → contact info → confetti finale. Approved by Joseph.</div>
     </div>
 
+    <!-- Creative direction -->
+    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px; margin-top:32px;">Creative direction — full website</h2>
+
     <div class="build-block">
-      <div class="b-title">Conversational intake form (full screen overlay)</div>
+      <div class="b-title">Joseph's references</div>
       <div class="b-body">
-        Opens as a full screen overlay triggered by any CTA button. One question at a time. Back navigation and keyboard support. Confirmation prompt on close to avoid losing answers.<br><br>
-        <strong>Two paths:</strong><br>
-        Path A — Planning a surprise for someone else: specific questions about the person being surprised.<br>
-        Path B — Both want to be surprised: softer, open-ended questions that don't give anything away for either person.
+        <strong>72andSunny</strong> — emotional storytelling. He referenced a campaign about a teen dreaming of making the NFL. The feeling he wants: cinematic, personal, emotionally driven.<br><br>
+        <strong>Vogue Monogrid</strong> — interactive, in-the-moment experience. He doesn't want the art world aesthetic but wants that level of user engagement and interactivity while scrolling.
       </div>
     </div>
 
-    <div class="build-block" style="margin-bottom:32px;">
-      <div class="b-title">Backend</div>
-      <div class="b-body">Form submissions saved to Firebase. Joseph reviews each one manually and follows up with the client. No payment flow for now — manual approval first. An admin view for Joseph to manage submissions is planned as a next step.</div>
+    <div class="build-block">
+      <div class="b-title">Scroll-driven storytelling approach</div>
+      <div class="b-body">
+        The full website will use <strong>GSAP + ScrollTrigger</strong> — the industry standard for this type of experience. As the user scrolls, video plays, text reveals, sections pin and release. The user feels like they're controlling the story.<br><br>
+        <strong>Key technique — pinned video sections:</strong> page scrolls normally → hits a video → snaps full screen → video plays as the user continues scrolling → releases into the next section.<br><br>
+        Joseph has videos to supply. Short clips (8–15 seconds) work best. 1080p MP4 is the target format.
+      </div>
     </div>
 
     <!-- Open questions -->
-    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px;">Next steps</h2>
+    <h2 style="font-size:20px; font-weight:600; color:#fff; margin-bottom:20px; margin-top:32px;">Next steps</h2>
+    <div class="q-block"><span class="badge open">Waiting</span>&nbsp; Joseph to supply video footage for scroll sections</div>
+    <div class="q-block"><span class="badge open">Waiting</span>&nbsp; Joseph to confirm page structure and copy direction</div>
     <div class="q-block"><span class="badge open">Needed</span>&nbsp; Full breakdown of what's included in each tier</div>
+    <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Full multi-page website with scroll-driven storytelling</div>
+    <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Connect intake form to Firebase — live submissions to Joseph</div>
     <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Admin view to manage and review form submissions</div>
     <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Payment flow — manual approval first, direct booking later</div>
     <div class="q-block"><span class="badge pending">Planned</span>&nbsp; AI song personalization integration</div>
-    <div class="q-block"><span class="badge pending">Planned</span>&nbsp; Hosting setup</div>
   </div>
 
 
@@ -498,7 +506,7 @@
       <div class="card"><div class="card-title">Frontend</div>Vanilla JS · GSAP + ScrollTrigger · Google Fonts (Cormorant Garamond + Inter)</div>
       <div class="card"><div class="card-title">Backend</div>Firebase Firestore (compat SDK) · No build step required</div>
       <div class="card"><div class="card-title">Animations</div>GSAP for hero entrance · ScrollTrigger for scroll reveals · Form step transitions</div>
-      <div class="card"><div class="card-title">Hosting</div>TBD — Firebase Hosting is the natural choice (free tier)</div>
+      <div class="card"><div class="card-title">Hosting</div>GitHub Pages (free) + Firebase for data. Confirmed stack. Draft already live at fab14rocha-dev.github.io/Experience-Greenville-project/draft.html</div>
     </div>
 
     <div class="card" style="margin-top:12px;">
